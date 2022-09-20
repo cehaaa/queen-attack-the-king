@@ -7,8 +7,6 @@ import KingImage from "./../../assets/king.png";
 
 import GameContext from "../../context/gameContext";
 
-import Modal from "../Modal/Modal";
-
 const Game = () => {
 	const { initialBoard, board, setBoard, selectedPiece, setSelectedPiece } =
 		useContext(GameContext);
