@@ -189,12 +189,6 @@ const Game = () => {
 								Clear all board pieces
 							</div>
 						</div>
-
-						{/* <button
-							className='rounded px-4 py-3 bg-slate-600 font-semibold hover:bg-slate-500 duration-200'
-							onClick={reset}>
-							Reset Board
-						</button> */}
 					</div>
 				</div>
 			</div>
