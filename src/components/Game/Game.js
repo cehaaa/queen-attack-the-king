@@ -126,44 +126,75 @@ const Game = () => {
 		<>
 			{/* <Modal /> */}
 
-			<div className='h-screen mx-auto flex items-center w-6/12 justify-center text-white'>
-				<div>
-					<div className='flex flex-col items-center'>
-						<div className='text-3xl mb-10 font-mono'>
-							Queens That Can Attack the King
-						</div>
-						<div className='flex'>
-							<Board selectedPiece={selectedPiece} setKing={setKing} />
+			<div className='flex flex-col items-center justify-center min-h-screen font-mono bg-gray-700 text-white'>
+				{/* Title */}
+				<div className='text-3xl mb-10 font-semibold'>
+					Queens That Can Attack the King
+				</div>
 
-							<div className='ml-10'>
-								<div className='flex space-x-5'>
-									<button
-										className='bg-slate-700 focus:bg-slate-900 duration-200 p-3 cursor-pointer h-16 w-16 flex items-center justify-center rounded-md'
-										onClick={() => selectHandle("queen")}>
-										<img src={QueenImage} alt='queen' className='h-10' />
-									</button>
+				<div className='flex'>
+					{/* board */}
+					<Board selectedPiece={selectedPiece} setKing={setKing} />
+				</div>
 
-									<button
-										className='bg-slate-700 focus:bg-slate-900 duration-200 p-3 cursor-pointer h-16 w-16 flex items-center justify-center rounded-md'
-										onClick={() => selectHandle("king")}>
-										<img src={KingImage} alt='queen' className='h-10' />
-									</button>
-								</div>
-								<div className='mt-5 space-y-5 '>
-									<button
-										className='rounded px-4 py-3 bg-slate-700 font-semibold hover:bg-slate-900 duration-200'
-										onClick={solve}>
-										Solve Board
-									</button>
+				<div className='flex flex-col items-center space-y-5 mt-5'>
+					<div>
+						Selected piece:{" "}
+						{selectedPiece === "path"
+							? "Please select a piece"
+							: selectedPiece.charAt(0).toUpperCase() + selectedPiece.slice(1)}
+					</div>
 
-									<button
-										className='rounded px-4 py-3 bg-slate-700 font-semibold hover:bg-slate-900 duration-200'
-										onClick={reset}>
-										Reset Board
-									</button>
-								</div>
+					<div className='flex items-center  space-x-5'>
+						<div className='relative group'>
+							<button
+								className='bg-slate-600 duration-200 p-3 cursor-pointer h-16 w-16 flex items-center justify-center rounded-md'
+								onClick={() => selectHandle("queen")}>
+								<img src={QueenImage} alt='queen' className='h-10' />
+							</button>
+							<div className='font-semibold w-20 py-1 text-sm rounded-lg bg-slate-600 flex justify-center -bottom-0 group-hover:-bottom-10 -right-2 absolute opacity-0 group-hover:opacity-100 duration-200 border -z-10 group-hover:z-10'>
+								Queen
 							</div>
 						</div>
+
+						<div className='relative group'>
+							<button
+								className='bg-slate-600 duration-200 p-3 cursor-pointer h-16 w-16 flex items-center justify-center rounded-md'
+								onClick={() => selectHandle("king")}>
+								<img src={KingImage} alt='queen' className='h-10' />
+							</button>
+							<div className='font-semibold w-20 py-1 text-sm rounded-lg bg-slate-600 flex justify-center -bottom-0 group-hover:-bottom-10 -right-2 absolute opacity-0 group-hover:opacity-100 duration-200 border -z-10 group-hover:z-10'>
+								King
+							</div>
+						</div>
+
+						<div className='relative group'>
+							<button
+								className='rounded px-4 py-3 bg-slate-600 font-semibold hover:bg-slate-500 duration-200'
+								onClick={solve}>
+								Solve Board
+							</button>
+							<div className='font-semibold px-5 w-[250px] py-1 text-sm rounded-lg bg-slate-600 flex justify-center bottom-0 group-hover:-bottom-14 -right-12 absolute opacity-0 group-hover:opacity-100 duration-200 border -z-10 group-hover:z-10'>
+								Find the queen that can attack the king
+							</div>
+						</div>
+
+						<div className='relative group'>
+							<button
+								className='rounded px-4 py-3 bg-slate-600 font-semibold hover:bg-slate-500 duration-200'
+								onClick={reset}>
+								Reset Board
+							</button>
+							<div className='font-semibold px-5 w-[250px] py-1 text-sm rounded-lg bg-slate-600 flex justify-center bottom-0 group-hover:-bottom-10 -right-12 absolute opacity-0 group-hover:opacity-100 duration-200 border -z-10 group-hover:z-10'>
+								Clear all board pieces
+							</div>
+						</div>
+
+						{/* <button
+							className='rounded px-4 py-3 bg-slate-600 font-semibold hover:bg-slate-500 duration-200'
+							onClick={reset}>
+							Reset Board
+						</button> */}
 					</div>
 				</div>
 			</div>

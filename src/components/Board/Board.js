@@ -24,8 +24,8 @@ const Board = ({ selectedPiece, setKing }) => {
 					const isEven = (rowIndex + colIndex) % 2 === 0;
 
 					const color = isEven
-						? "bg-slate-700 hover:bg-slate-800"
-						: "bg-slate-600 hover:bg-slate-700";
+						? "bg-lime-500 hover:bg-lime-200"
+						: "bg-lime-300 hover:bg-lime-200 ";
 
 					return (
 						<Cell
