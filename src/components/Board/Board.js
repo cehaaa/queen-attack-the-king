@@ -4,12 +4,18 @@ import Cell from "../Cell/Cell";
 
 import GameContext from "../../context/gameContext";
 
-const Board = ({ selectedPiece, setKing }) => {
+const Board = ({ selectedPiece, king, setKing }) => {
 	const { board, setBoard } = useContext(GameContext);
 
 	const setPiece = (row, col, piece) => {
 		if (piece === "king") {
-			setKing([row, col]);
+			if (king === null) {
+				setKing([row, col]);
+			} else {
+				alert("You can only place one King!");
+
+				return;
+			}
 		}
 
 		const newBoard = [...board];
@@ -18,27 +24,29 @@ const Board = ({ selectedPiece, setKing }) => {
 	};
 
 	return (
-		<div className='grid grid-cols-8'>
-			{board.map((row, rowIndex) => {
-				return row.map((col, colIndex) => {
-					const isEven = (rowIndex + colIndex) % 2 === 0;
+		<>
+			<div className='grid grid-cols-8'>
+				{board.map((row, rowIndex) => {
+					return row.map((col, colIndex) => {
+						const isEven = (rowIndex + colIndex) % 2 === 0;
 
-					const color = isEven
-						? "bg-lime-500 hover:bg-lime-200"
-						: "bg-lime-300 hover:bg-lime-200 ";
+						const color = isEven
+							? "bg-lime-500 hover:bg-lime-200"
+							: "bg-lime-300 hover:bg-lime-200 ";
 
-					return (
-						<Cell
-							board
-							color={col === "attack" ? "bg-red-500 hover:bg-red-600" : color}
-							key={colIndex}
-							piece={board[rowIndex][colIndex]}
-							onClick={() => setPiece(rowIndex, colIndex, selectedPiece)}
-						/>
-					);
-				});
-			})}
-		</div>
+						return (
+							<Cell
+								board
+								color={col === "attack" ? "bg-red-500 hover:bg-red-600" : color}
+								key={colIndex}
+								piece={board[rowIndex][colIndex]}
+								onClick={() => setPiece(rowIndex, colIndex, selectedPiece)}
+							/>
+						);
+					});
+				})}
+			</div>
+		</>
 	);
 };
 
