@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 
 import Board from "../Board/Board";
+import Modal from "../Modal/Modal";
 
 import QueenImage from "./../../assets/queen.png";
 import KingImage from "./../../assets/king.png";
@@ -11,7 +12,8 @@ const Game = () => {
 	const { initialBoard, board, setBoard, selectedPiece, setSelectedPiece } =
 		useContext(GameContext);
 
-	const [king, setKing] = useState([0, 0]);
+	const [king, setKing] = useState(null);
+	const [isShow, setIsShow] = useState(true);
 
 	const selectHandle = piece => {
 		setSelectedPiece(piece);
@@ -111,8 +113,6 @@ const Game = () => {
 		);
 
 		setBoard(newBoard);
-
-		console.log(board);
 	};
 
 	const reset = () => {
@@ -124,7 +124,7 @@ const Game = () => {
 
 	return (
 		<>
-			{/* <Modal /> */}
+			{isShow && <Modal isShow={isShow} setIsShow={setIsShow} />}
 
 			<div className='flex flex-col items-center justify-center min-h-screen font-mono bg-gray-700 text-white'>
 				{/* Title */}
@@ -134,12 +134,12 @@ const Game = () => {
 
 				<div className='flex'>
 					{/* board */}
-					<Board selectedPiece={selectedPiece} setKing={setKing} />
+					<Board selectedPiece={selectedPiece} king={king} setKing={setKing} />
 				</div>
 
 				<div className='flex flex-col items-center space-y-5 mt-5'>
 					<div>
-						Selected piece:{" "}
+						Selected piece:
 						{selectedPiece === "path"
 							? "Please select a piece"
 							: selectedPiece.charAt(0).toUpperCase() + selectedPiece.slice(1)}
@@ -152,7 +152,8 @@ const Game = () => {
 								onClick={() => selectHandle("queen")}>
 								<img src={QueenImage} alt='queen' className='h-10' />
 							</button>
-							<div className='font-semibold w-20 py-1 text-sm rounded-lg bg-slate-600 flex justify-center -bottom-0 group-hover:-bottom-10 -right-2 absolute opacity-0 group-hover:opacity-100 duration-200 border -z-10 group-hover:z-10'>
+
+							<div className='absolute font-semibold px-5 py-1 cursor-pointer text-sm rounded-lg bg-slate-600 flex justify-center -z-10 bottom-0 group-hover:translate-y-9 group-hover:z-10 duration-200'>
 								Queen
 							</div>
 						</div>
@@ -161,9 +162,10 @@ const Game = () => {
 							<button
 								className='bg-slate-600 duration-200 p-3 cursor-pointer h-16 w-16 flex items-center justify-center rounded-md'
 								onClick={() => selectHandle("king")}>
-								<img src={KingImage} alt='queen' className='h-10' />
+								<img src={KingImage} alt='king' className='h-10' />
 							</button>
-							<div className='font-semibold w-20 py-1 text-sm rounded-lg bg-slate-600 flex justify-center -bottom-0 group-hover:-bottom-10 -right-2 absolute opacity-0 group-hover:opacity-100 duration-200 border -z-10 group-hover:z-10'>
+
+							<div className='absolute font-semibold px-5 py-1 cursor-pointer text-sm rounded-lg bg-slate-600 flex justify-center -z-10 bottom-0 group-hover:translate-y-9 group-hover:z-10 duration-200'>
 								King
 							</div>
 						</div>
@@ -174,7 +176,8 @@ const Game = () => {
 								onClick={solve}>
 								Solve Board
 							</button>
-							<div className='font-semibold px-5 w-[250px] py-1 text-sm rounded-lg bg-slate-600 flex justify-center bottom-0 group-hover:-bottom-14 -right-12 absolute opacity-0 group-hover:opacity-100 duration-200 border -z-10 group-hover:z-10'>
+
+							<div className='absolute font-semibold px-5 py-1 cursor-pointer text-sm rounded-lg bg-slate-600 flex justify-center -z-10 bottom-0 group-hover:translate-y-14 group-hover:z-10 duration-200 w-[250px]'>
 								Find the queen that can attack the king
 							</div>
 						</div>
@@ -185,7 +188,8 @@ const Game = () => {
 								onClick={reset}>
 								Reset Board
 							</button>
-							<div className='font-semibold px-5 w-[250px] py-1 text-sm rounded-lg bg-slate-600 flex justify-center bottom-0 group-hover:-bottom-10 -right-12 absolute opacity-0 group-hover:opacity-100 duration-200 border -z-10 group-hover:z-10'>
+
+							<div className='absolute font-semibold px-5 py-1 cursor-pointer text-sm rounded-lg bg-slate-600 flex justify-center -z-10 bottom-0 group-hover:translate-y-9 group-hover:z-10 duration-200 w-[250px]'>
 								Clear all board pieces
 							</div>
 						</div>
