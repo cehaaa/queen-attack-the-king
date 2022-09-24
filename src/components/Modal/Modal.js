@@ -1,17 +1,23 @@
 import React from "react";
 
 const Modal = ({ isShow, setIsShow }) => {
+	const closeModal = () => {
+		document.getElementById("modal").classList.add("modal-shrink");
+		setTimeout(() => {
+			setIsShow(false);
+		}, 200);
+	};
+
 	return (
 		<div className='fixed bg-slate-700 bg-opacity-50 text-white h-screen w-screen flex items-center justify-center'>
 			<div
-				className={`bg-slate-700 rounded-lg w-6/12 p-5 border font-mono duration-200 scale-0 ${
-					isShow ? "opacity-100 scale-100" : "opacity-0"
-				}`}>
+				className='bg-slate-700 rounded-lg w-6/12 p-5 border font-mono  modal-animate'
+				id='modal'>
 				<div className='flex justify-between items-center'>
 					<div className='text-2xl font-semibold'>Introduction ✨</div>
 					<div
 						className='cursor-pointer hover:underline underline-offset-8 duration-200 '
-						onClick={() => setIsShow(false)}>
+						onClick={closeModal}>
 						close
 					</div>
 				</div>
