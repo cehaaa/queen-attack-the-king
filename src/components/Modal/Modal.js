@@ -26,9 +26,6 @@ const Modal = ({ isShow, setIsShow }) => {
 					<p>
 						This is the visualization of Leetcode algorithm task. My initial
 						inspiration for this{" "}
-						{/* <b className='underline underline-offset-4 hover:text-green-500 duration-200 hover:drop-shadow-lg cursor-pointer shadow-green-500 s'>
-							Queen That can Attack The King
-						</b>{" "} */}
 						<span className='before:block before:absolute before:bg-green-500 before:-inset-1 inline relative hover:before:-skew-y-2 hover:before:bg-green-600 before:duration-200'>
 							<span className='relative'>Queen That can Attack The King</span>
 						</span>{" "}
@@ -37,7 +34,8 @@ const Modal = ({ isShow, setIsShow }) => {
 							<a
 								target='_blank'
 								href='https://leetcode.com/problems/queens-that-can-attack-the-king/'
-								className='relative'>
+								className='relative'
+								rel='noreferrer'>
 								Leetcode task.
 							</a>
 						</span>{" "}
