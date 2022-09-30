@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import Game from "./Game/Game";
+import Modal from "./Modal/Modal";
 
 import GameContext from "../context/gameContext";
 
@@ -22,10 +23,15 @@ const App = () => {
 		setBoard,
 	};
 
+	const [isShow, setIsShow] = useState(true);
+
 	return (
-		<GameContext.Provider value={gameContextValue}>
-			<Game />
-		</GameContext.Provider>
+		<>
+			{isShow && <Modal isShow={isShow} setIsShow={setIsShow} />}
+			<GameContext.Provider value={gameContextValue}>
+				<Game setIsShowModal={setIsShow} />
+			</GameContext.Provider>
+		</>
 	);
 };
 

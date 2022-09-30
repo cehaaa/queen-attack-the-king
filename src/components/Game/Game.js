@@ -1,19 +1,17 @@
 import React, { useContext, useState } from "react";
 
 import Board from "../Board/Board";
-import Modal from "../Modal/Modal";
 
 import QueenImage from "./../../assets/queen.png";
 import KingImage from "./../../assets/king.png";
 
 import GameContext from "../../context/gameContext";
 
-const Game = () => {
+const Game = ({ setIsShowModal }) => {
 	const { initialBoard, board, setBoard, selectedPiece, setSelectedPiece } =
 		useContext(GameContext);
 
 	const [king, setKing] = useState(null);
-	const [isShow, setIsShow] = useState(true);
 
 	const selectHandle = piece => {
 		setSelectedPiece(piece);
@@ -124,8 +122,6 @@ const Game = () => {
 
 	return (
 		<>
-			{isShow && <Modal isShow={isShow} setIsShow={setIsShow} />}
-
 			<div className='flex flex-col items-center justify-center min-h-screen font-mono bg-gray-700 text-white'>
 				{/* Title */}
 				<div className='text-3xl mb-10 font-semibold'>
@@ -191,6 +187,18 @@ const Game = () => {
 
 							<div className='absolute font-semibold px-5 py-1 cursor-pointer text-sm rounded-lg bg-slate-600 flex justify-center -z-10 bottom-0 group-hover:translate-y-9 group-hover:z-10 duration-200 w-[250px]'>
 								Clear all board pieces
+							</div>
+						</div>
+
+						<div className='relative group'>
+							<button
+								className='rounded px-4 py-3 bg-slate-600 font-semibold hover:bg-slate-500 duration-200'
+								onClick={() => setIsShowModal(true)}>
+								About
+							</button>
+
+							<div className='absolute font-semibold px-5 py-1 cursor-pointer text-sm rounded-lg bg-slate-600 flex justify-center -z-10 bottom-0 group-hover:translate-y-9 group-hover:z-10 duration-200 w-[250px]'>
+								About this project
 							</div>
 						</div>
 					</div>

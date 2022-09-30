@@ -16,7 +16,7 @@ const Modal = ({ isShow, setIsShow }) => {
 				<div className='flex justify-between items-center'>
 					<div className='text-2xl font-semibold'>Introduction ✨</div>
 					<div
-						className='cursor-pointer hover:underline underline-offset-8 duration-200 '
+						className='cursor-pointer hover:underline underline-offset-8'
 						onClick={closeModal}>
 						close
 					</div>
@@ -42,6 +42,15 @@ const Modal = ({ isShow, setIsShow }) => {
 						This was an exciting project to work on. I have had many aha moments
 						while building this.
 					</p>
+				</div>
+				<div className='mt-5'>
+					<a
+						target='_blank'
+						href='https://github.com/cehaaa/queen-attack-the-king'
+						className='hover:underline underline-offset-8'
+						rel='noreferrer'>
+						Github
+					</a>
 				</div>
 			</div>
 		</div>
