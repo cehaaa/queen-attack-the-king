@@ -115,7 +115,7 @@ const Game = ({ setIsShowModal }) => {
 
 	const reset = () => {
 		setSelectedPiece("path");
-		setKing([0, 0]);
+		setKing(null);
 
 		setBoard(initialBoard);
 	};
