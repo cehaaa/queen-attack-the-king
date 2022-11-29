@@ -11,7 +11,7 @@ const Modal = ({ isShow, setIsShow }) => {
 	return (
 		<div className='fixed bg-slate-700 bg-opacity-50 text-white h-screen w-screen flex items-center justify-center'>
 			<div
-				className='bg-slate-700 rounded-lg w-6/12 p-5 border font-mono  modal-animate'
+				className='bg-slate-700 rounded-lg w-6/12 p-5 border font-mono modal-animate'
 				id='modal'>
 				<div className='flex justify-between items-center'>
 					<div className='text-2xl font-semibold'>Introduction ✨</div>
