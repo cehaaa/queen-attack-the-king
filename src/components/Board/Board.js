@@ -9,11 +9,16 @@ const Board = ({ selectedPiece, king, setKing }) => {
 
 	const setPiece = (row, col, piece) => {
 		if (piece === "king") {
-			if (king === null) {
-				setKing([row, col]);
-			} else {
-				alert("You can only place one King!");
+			if (king !== null) {
+				alert("You can only place one king");
+				return;
+			}
 
+			setKing([row, col]);
+		}
+
+		if (piece === "queen") {
+			if (board[row][col] === "king") {
 				return;
 			}
 		}
