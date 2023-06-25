@@ -29,29 +29,21 @@ const Board = ({ selectedPiece, king, setKing }) => {
 	};
 
 	return (
-		<>
-			<div className='grid grid-cols-8'>
-				{board.map((row, rowIndex) => {
-					return row.map((col, colIndex) => {
-						const isEven = (rowIndex + colIndex) % 2 === 0;
-
-						const color = isEven
-							? "bg-lime-500 hover:bg-lime-200"
-							: "bg-lime-300 hover:bg-lime-200 ";
-
-						return (
-							<Cell
-								board
-								color={col === "attack" ? "bg-red-500 hover:bg-red-600" : color}
-								key={colIndex}
-								piece={board[rowIndex][colIndex]}
-								onClick={() => setPiece(rowIndex, colIndex, selectedPiece)}
-							/>
-						);
-					});
-				})}
-			</div>
-		</>
+		<div className='grid grid-cols-8 w-full h-[360px] spawn shrink-0 md:h-[500px] gap-0 bg-white rounded overflow-hidden'>
+			{board.map((row, rowIndex) => {
+				return row.map((_, colIndex) => {
+					return (
+						<Cell
+							key={colIndex}
+							rowIndex={rowIndex}
+							colIndex={colIndex}
+							piece={board[rowIndex][colIndex]}
+							onClick={() => setPiece(rowIndex, colIndex, selectedPiece)}
+						/>
+					);
+				});
+			})}
+		</div>
 	);
 };
 
