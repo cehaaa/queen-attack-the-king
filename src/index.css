@@ -2,7 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-.modal-animate {
+.spawn {
+	animation: spawn 200ms linear;
+}
+
+.despawn {
+	animation: despawn 200ms linear;
+}
+
+@keyframes spawn {
+	0% {
+		opacity: 0;
+		transform: scale(0);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes despawn {
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(0);
+	}
+}
+
+.place-piece {
+	animation: place-piece 200ms linear;
+}
+
+@keyframes place-piece {
+	0% {
+		opacity: 0;
+		transform: scale(2.5);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.attacker-piece {
+	animation: attacker-piece infinite;
+}
+
+@keyframes attacker-piece {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(2);
+	}
+}
+
+/* .modal-animate {
 	animation: modal 0.3s ease-in-out;
 }
 
@@ -21,4 +79,4 @@
 		opacity: 1;
 		transform: scale(1);
 	}
-}
+} */
