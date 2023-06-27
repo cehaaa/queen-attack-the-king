@@ -1,5 +1,5 @@
-import React from "react";
+import { createContext } from "react";
 
-export const GameContext = React.createContext();
+export const GameContext = createContext();
 
 export default GameContext;

@@ -1,209 +1,129 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
+import Modal from "../Modal/Modal";
 import Board from "../Board/Board";
+import PieceMenu from "../PieceMenu/PieceMenu";
 
-import QueenImage from "./../../assets/queen.png";
-import KingImage from "./../../assets/king.png";
+import GameContext from "../../context/GameContext";
 
-import GameContext from "../../context/gameContext";
+import useModal from "../../hooks/useModal";
+import useBoardLogic from "../../hooks/useBoardLogic";
 
-const Game = ({ setIsShowModal }) => {
-	const { initialBoard, board, setBoard, selectedPiece, setSelectedPiece } =
-		useContext(GameContext);
+const Game = () => {
+	const {
+		initialBoard,
 
-	const [king, setKing] = useState(null);
+		board,
+		setBoard,
 
-	const selectHandle = piece => {
-		setSelectedPiece(piece);
+		kingCoordinate,
+		setKingCoordinate,
+
+		setMultipleSelectedCell,
+	} = useContext(GameContext);
+
+	const { transformAttackToQueen, handleSolveBoard, handleResetBoard } =
+		useBoardLogic({
+			initialBoard,
+
+			board,
+			setBoard,
+
+			setKingCoordinate,
+
+			setMultipleSelectedCell,
+		});
+
+	const { isShowModal: isShowAboutModal, toggleModal: toggleAboutModal } =
+		useModal();
+
+	const solveBoard = () => {
+		if (kingCoordinate === null) {
+			alert("No king placed");
+			return;
+		}
+
+		transformAttackToQueen(board);
+
+		const result = handleSolveBoard(board, [
+			kingCoordinate.row,
+			kingCoordinate.col,
+		]);
+
+		setBoard(result);
 	};
 
-	const solve = () => {
-		const res = [];
-		let [r, c] = king;
-		// check left
-		for (let i = king[1]; i >= 0; i--) {
-			if (board[king[0]][i] === "queen" || board[king[0]][i] === "attack") {
-				res.push([king[0], i]);
-				break;
-			}
-		}
-
-		// check right
-		for (let i = king[1]; i < 8; i++) {
-			if (board[king[0]][i] === "queen" || board[king[0]][i] === "attack") {
-				res.push([king[0], i]);
-				break;
-			}
-		}
-
-		// check top
-		for (let i = king[0]; i >= 0; i--) {
-			if (board[i][king[1]] === "queen" || board[i][king[1]] === "attack") {
-				res.push([i, king[1]]);
-				break;
-			}
-		}
-
-		// check bottom
-		for (let i = king[0]; i < 8; i++) {
-			if (board[i][king[1]] === "queen" || board[i][king[1]] === "attack") {
-				res.push([i, king[1]]);
-				break;
-			}
-		}
-
-		// check diagonal top left
-		while (r >= 0 && c >= 0) {
-			if (board[r][c] === "queen" || board[r][c] === "attack") {
-				res.push([r, c]);
-				break;
-			}
-
-			r -= 1;
-			c -= 1;
-		}
-		[r, c] = king;
-
-		// check diagonal bottom right
-		while (r < 8 && c < 8) {
-			if (board[r][c] === "queen" || board[r][c] === "attack") {
-				res.push([r, c]);
-				break;
-			}
-
-			r += 1;
-			c += 1;
-		}
-		[r, c] = king;
-
-		// check diagonal top right
-		while (r >= 0 && c < 8) {
-			if (board[r][c] === "queen" || board[r][c] === "attack") {
-				res.push([r, c]);
-				break;
-			}
-
-			r -= 1;
-			c += 1;
-		}
-		[r, c] = king;
-
-		// check diagonal bottom left
-		while (r < 8 && c >= 0) {
-			if (board[r][c] === "queen" || board[r][c] === "attack") {
-				res.push([r, c]);
-				break;
-			}
-
-			r += 1;
-			c -= 1;
-		}
-		[r, c] = king;
-
-		// modified board to show queen can attack
-		const newBoard = board.map((row, i) =>
-			row.map((col, j) => {
-				if (res.some(([r, c]) => r === i && c === j)) {
-					return "attack";
-				}
-				return col;
-			})
-		);
-
-		setBoard(newBoard);
-	};
-
-	const reset = () => {
-		setSelectedPiece("path");
-		setKing(null);
-
-		setBoard(initialBoard);
-	};
+	if (isShowAboutModal) return <Modal toggleModal={toggleAboutModal} />;
 
 	return (
 		<>
-			<div className='flex flex-col items-center justify-center min-h-screen font-mono bg-gray-700 text-white'>
-				{/* Title */}
-				<div className='text-3xl mb-10 font-semibold'>
-					Queens That Can Attack the King
-				</div>
+			<PieceMenu />
 
-				<div className='flex'>
-					{/* board */}
-					<Board selectedPiece={selectedPiece} king={king} setKing={setKing} />
-				</div>
+			<section className='md:w-[500px] min-h-screen mx-auto h-full w-full text-gray-400 p-3 md:p-0 flex flex-col'>
+				<header className='mt-5 text-xl'>
+					<div className='text-white font-medium'>
+						Queen That Can Attack The King
+					</div>
+				</header>
 
-				<div className='flex flex-col items-center space-y-5 mt-5'>
+				<section className='mt-5'>
+					<Board />
+				</section>
+
+				<section className='mt-5'>
 					<div>
-						Selected piece:
-						{selectedPiece === "path"
-							? "Please select a piece"
-							: selectedPiece.charAt(0).toUpperCase() + selectedPiece.slice(1)}
+						You can choose multiple positions by clicking on the board, and then
+						choose the piece you want to place by{" "}
+						<span className='bg-gray-700 text-xs rounded py-[3px] px-[5px] text-white'>
+							Right click
+						</span>{" "}
+						or{" "}
+						<span className='bg-gray-700 text-xs rounded py-[3px] px-[5px] text-white'>
+							Ctrl + Click
+						</span>{" "}
+						Have fun customizing your chessboard!
 					</div>
 
-					<div className='flex items-center  space-x-5'>
-						<div className='relative group'>
-							<button
-								className='bg-slate-600 duration-200 p-3 cursor-pointer h-16 w-16 flex items-center justify-center rounded-md'
-								onClick={() => selectHandle("queen")}>
-								<img src={QueenImage} alt='queen' className='h-10' />
-							</button>
+					<div className='flex mt-5 gap-x-3'>
+						<button
+							className='rounded-md px-4 py-2 bg-slate-600 font-medium hover:bg-opacity-80 duration-200'
+							onClick={solveBoard}>
+							Solve Board
+						</button>
 
-							<div className='absolute font-semibold px-5 py-1 cursor-pointer text-sm rounded-lg bg-slate-600 flex justify-center -z-10 bottom-0 group-hover:translate-y-9 group-hover:z-10 duration-200'>
-								Queen
-							</div>
-						</div>
+						<button
+							className='rounded-md px-4 py-2 bg-slate-600 font-medium hover:bg-opacity-80 duration-200'
+							onClick={handleResetBoard}>
+							Reset Board
+						</button>
 
-						<div className='relative group'>
-							<button
-								className='bg-slate-600 duration-200 p-3 cursor-pointer h-16 w-16 flex items-center justify-center rounded-md'
-								onClick={() => selectHandle("king")}>
-								<img src={KingImage} alt='king' className='h-10' />
-							</button>
-
-							<div className='absolute font-semibold px-5 py-1 cursor-pointer text-sm rounded-lg bg-slate-600 flex justify-center -z-10 bottom-0 group-hover:translate-y-9 group-hover:z-10 duration-200'>
-								King
-							</div>
-						</div>
-
-						<div className='relative group'>
-							<button
-								className='rounded px-4 py-3 bg-slate-600 font-semibold hover:bg-slate-500 duration-200'
-								onClick={solve}>
-								Solve Board
-							</button>
-
-							<div className='absolute font-semibold px-5 py-1 cursor-pointer text-sm rounded-lg bg-slate-600 flex justify-center -z-10 bottom-0 group-hover:translate-y-14 group-hover:z-10 duration-200 w-[250px]'>
-								Find the queen that can attack the king
-							</div>
-						</div>
-
-						<div className='relative group'>
-							<button
-								className='rounded px-4 py-3 bg-slate-600 font-semibold hover:bg-slate-500 duration-200'
-								onClick={reset}>
-								Reset Board
-							</button>
-
-							<div className='absolute font-semibold px-5 py-1 cursor-pointer text-sm rounded-lg bg-slate-600 flex justify-center -z-10 bottom-0 group-hover:translate-y-9 group-hover:z-10 duration-200 w-[250px]'>
-								Clear all board pieces
-							</div>
-						</div>
-
-						<div className='relative group'>
-							<button
-								className='rounded px-4 py-3 bg-slate-600 font-semibold hover:bg-slate-500 duration-200'
-								onClick={() => setIsShowModal(true)}>
-								About
-							</button>
-
-							<div className='absolute font-semibold px-5 py-1 cursor-pointer text-sm rounded-lg bg-slate-600 flex justify-center -z-10 bottom-0 group-hover:translate-y-9 group-hover:z-10 duration-200 w-[250px]'>
-								About this project
-							</div>
-						</div>
+						<button
+							className='rounded-md px-4 py-2 bg-black-checker font-medium hover:bg-opacity-80 text-white duration-200 ml-auto'
+							onClick={toggleAboutModal}>
+							About project
+						</button>
 					</div>
-				</div>
-			</div>
+				</section>
+
+				<footer className='mt-auto border-t border-gray-600 text-center text-sm py-4'>
+					Crafted with passion by{" "}
+					<a
+						className='text-gray-200 underline'
+						rel='noreferrer'
+						target='_blank'
+						href='https://github.com/cehaaa'>
+						Christian
+					</a>{" "}
+					Check the GitHub{" "}
+					<a
+						className='text-gray-200 underline'
+						rel='noreferrer'
+						target='_blank'
+						href='https://github.com/cehaaa/queen-attack-the-king'>
+						here.
+					</a>{" "}
+				</footer>
+			</section>
 		</>
 	);
 };

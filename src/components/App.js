@@ -1,35 +1,36 @@
 import React, { useState } from "react";
 
 import Game from "./Game/Game";
-import Modal from "./Modal/Modal";
 
-import GameContext from "../context/gameContext";
+import GameContext from "../context/GameContext";
 
 const App = () => {
 	const initialBoard = Array(8)
 		.fill()
 		.map(() => Array(8).fill("path"));
 
-	const [selectedPiece, setSelectedPiece] = useState("path");
 	const [board, setBoard] = useState(initialBoard);
+	const [multipleSelectedCell, setMultipleSelectedCell] = useState([]);
+
+	const [kingCoordinate, setKingCoordinate] = useState(null);
 
 	const gameContextValue = {
 		initialBoard,
 
-		selectedPiece,
-		setSelectedPiece,
-
 		board,
 		setBoard,
-	};
 
-	const [isShow, setIsShow] = useState(true);
+		kingCoordinate,
+		setKingCoordinate,
+
+		multipleSelectedCell,
+		setMultipleSelectedCell,
+	};
 
 	return (
 		<>
-			{isShow && <Modal isShow={isShow} setIsShow={setIsShow} />}
 			<GameContext.Provider value={gameContextValue}>
-				<Game setIsShowModal={setIsShow} />
+				<Game />
 			</GameContext.Provider>
 		</>
 	);
