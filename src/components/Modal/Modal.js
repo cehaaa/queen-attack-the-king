@@ -1,56 +1,75 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
-const Modal = ({ isShow, setIsShow }) => {
+const Modal = ({ toggleModal }) => {
+	const modalRef = useRef();
+
 	const closeModal = () => {
-		document.getElementById("modal").classList.add("modal-shrink");
-		setTimeout(() => {
-			setIsShow(false);
-		}, 200);
+		const modalElement = modalRef.current;
+
+		modalElement.classList.add("despawn");
+
+		modalElement.addEventListener("animationend", () => {
+			modalElement.classList.remove("despawn");
+
+			toggleModal();
+		});
 	};
 
+	useEffect(() => {
+		const modalElement = modalRef.current;
+
+		modalElement.addEventListener("animationend", () => {
+			modalElement.classList.remove("spawn");
+		});
+	}, []);
+
 	return (
-		<div className='fixed bg-slate-700 bg-opacity-50 text-white h-screen w-screen flex items-center justify-center'>
+		<div className='fixed top-0 left-0 w-full min-h-screen bg-gray-900 flex items-center justify-center bg-opacity-50'>
 			<div
-				className='bg-slate-700 rounded-lg w-6/12 p-5 border font-mono modal-animate'
-				id='modal'>
+				ref={modalRef}
+				className='w-full md:w-[500px] text-white bg-gray-700 rounded-md p-5 spawn'>
 				<div className='flex justify-between items-center'>
-					<div className='text-2xl font-semibold'>Introduction ✨</div>
-					<div
-						className='cursor-pointer hover:underline underline-offset-8'
-						onClick={closeModal}>
-						close
-					</div>
+					<div className='text-2xl'>About this project</div>
+
+					<button onClick={closeModal}>
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							fill='none'
+							viewBox='0 0 24 24'
+							strokeWidth={1.5}
+							stroke='currentColor'
+							className='w-6 h-6'>
+							<path
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								d='M6 18L18 6M6 6l12 12'
+							/>
+						</svg>
+					</button>
 				</div>
 
-				<div className='mt-5 leading-loose'>
-					<p>
-						This is the visualization of Leetcode algorithm task. My initial
-						inspiration for this{" "}
-						<span className='before:block before:absolute before:bg-green-500 before:-inset-1 inline relative hover:before:-skew-y-2 hover:before:bg-green-600 before:duration-200'>
-							<span className='relative'>Queen That can Attack The King</span>
-						</span>{" "}
-						project came from this 👉{" "}
-						<span className='before:block before:absolute before:bg-green-500 before:-inset-1 inline relative hover:before:-skew-y-2 cursor-pointer before:duration-200'>
-							<a
-								target='_blank'
-								href='https://leetcode.com/problems/queens-that-can-attack-the-king/'
-								className='relative'
-								rel='noreferrer'>
-								Leetcode task.
-							</a>
-						</span>{" "}
-						This was an exciting project to work on. I have had many aha moments
-						while building this.
-					</p>
-				</div>
-				<div className='mt-5'>
+				<div className='text-gray-400 mt-4'>
+					This is the visualization of Leetcode algorithm task. My initial
+					inspiration for this{" "}
+					<span className='text-gray-200'>Queen That can Attack The King</span>{" "}
+					project is came from{" "}
 					<a
+						className='text-gray-200 underline'
+						rel='noreferrer'
 						target='_blank'
-						href='https://github.com/cehaaa/queen-attack-the-king'
-						className='hover:underline underline-offset-8'
-						rel='noreferrer'>
-						Github
-					</a>
+						href='https://leetcode.com/problems/queens-that-can-attack-the-king/'>
+						Leetcode task.
+					</a>{" "}
+					This was an exciting project to work on. I have had many aha moments
+					while building this.
+				</div>
+
+				<div className='mt-4'>
+					<button
+						className='rounded-md px-4 py-2 bg-black-checker font-medium hover:bg-opacity-80 text-white duration-200 ml-auto'
+						onClick={closeModal}>
+						Start Exploring
+					</button>
 				</div>
 			</div>
 		</div>
