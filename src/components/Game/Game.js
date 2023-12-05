@@ -87,31 +87,35 @@ const Game = () => {
 					<div className='flex mt-5 gap-x-3'>
 						<button
 							className='rounded-md px-4 py-2 bg-slate-600 font-medium hover:bg-opacity-80 duration-200'
-							onClick={solveBoard}>
+							onClick={solveBoard}
+						>
 							Solve Board
 						</button>
 
 						<button
 							className='rounded-md px-4 py-2 bg-slate-600 font-medium hover:bg-opacity-80 duration-200'
-							onClick={handleResetBoard}>
+							onClick={handleResetBoard}
+						>
 							Reset Board
 						</button>
 
 						<button
 							className='rounded-md px-4 py-2 bg-black-checker font-medium hover:bg-opacity-80 text-white duration-200 ml-auto'
-							onClick={toggleAboutModal}>
+							onClick={toggleAboutModal}
+						>
 							About project
 						</button>
 					</div>
 				</section>
 
-				<footer className='mt-auto border-t border-gray-600 text-center text-sm py-4'>
+				<footer className='mt-5 border-t border-gray-600 text-center text-sm py-4'>
 					Crafted with passion by{" "}
 					<a
 						className='text-gray-200 underline'
 						rel='noreferrer'
 						target='_blank'
-						href='https://github.com/cehaaa'>
+						href='https://github.com/cehaaa'
+					>
 						Christian
 					</a>{" "}
 					Check the GitHub{" "}
@@ -119,9 +123,10 @@ const Game = () => {
 						className='text-gray-200 underline'
 						rel='noreferrer'
 						target='_blank'
-						href='https://github.com/cehaaa/queen-attack-the-king'>
+						href='https://github.com/cehaaa/queen-attack-the-king'
+					>
 						here.
-					</a>{" "}
+					</a>
 				</footer>
 			</section>
 		</>
